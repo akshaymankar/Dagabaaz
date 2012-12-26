@@ -7,10 +7,11 @@ class Dagabaaz < Sinatra::Base
 
   get '/' do
     config=YAML.load_file "config.yml"
-    projects  = ""
-    get_pipelines(config["url"]).each do |project|
-      projects += project.name + "\n"
+    pipelines  = ""
+    project = get_pipelines(config["url"])
+    project.pipelines.each do |pipeline|
+      pipelines += pipeline.name + "\n"
     end
-    projects
+    pipelines
   end
 end
