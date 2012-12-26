@@ -56,4 +56,9 @@ describe Pipeline do
     main.stages.first.stages.size.should == 1
     main.stages.first.stages.first.stages.size.should == 2
   end
+
+  it "should strip name while saving " do
+    pipeline1 = Pipeline.new " Abcd "
+    pipeline1.name.should == "Abcd"
+  end
 end

@@ -3,7 +3,7 @@ class Pipeline
 
   def initialize(name = "Default")
     pipeline_names = name.split("::")
-    @name = pipeline_names.first
+    @name = pipeline_names.first.strip
     pipeline_names.shift
     stages = pipeline_names.join("::")
     @stages = stages == "" ? [] : [ Pipeline.new(stages) ]
