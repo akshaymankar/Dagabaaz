@@ -1,6 +1,5 @@
 class Pipeline
-  attr_accessor :name
-  attr_accessor :stages
+  attr_reader :name, :stages
 
   def initialize(name = "Default")
     pipeline_names = name.split("::")
@@ -19,8 +18,14 @@ class Pipeline
 
   alias == eql?
 
-  def addStages(stages)
-    @stages.push(*stages)
+  def add(more_stages)
+    more_stages.each do |stage|
+      if @stages.include?(stage)
+        @stages.find{|p| p == stage}.add(stage.stages)
+      else
+        @stages.push stage
+      end
+    end
   end
 
 end

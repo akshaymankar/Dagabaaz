@@ -8,10 +8,8 @@ module PipelineHelper
       Pipeline.new pipeline["name"]
     end
 
-    project = Project.new
-    pipelines.each do |pipeline|
-      project.add pipeline
-    end
+    project = Pipeline.new
+    project.add pipelines
     project
   end
 end

@@ -2,7 +2,7 @@
   %head
     %title Dagabaaz!
   %body
-    - @project.pipelines.each do |pipeline|
+    - @project.stages.each do |pipeline|
       %strong= pipeline.name
       - pipeline.stages.each do |stage|
         %span= stage.name

@@ -8,12 +8,7 @@ class Dagabaaz < Sinatra::Base
   set :views, ["./app/views"]
   get '/' do
     config=YAML.load_file "config.yml"
-    #pipelines  = ""
     @project = get_pipelines(config["url"])
-    #@project.pipelines.each do |pipeline|
-    #  pipelines += pipeline.name + "\n"
-    #end
-    #pipelines
     haml :index
   end
 end

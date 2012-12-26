@@ -38,10 +38,22 @@ describe Pipeline do
     pipeline2 = Pipeline.new "Pipeline:Stage2"
     pipeline2.stages.push(Pipeline.new "Stage3")
 
-    pipeline1.addStages(pipeline2.stages)
+    pipeline1.add(pipeline2.stages)
 
     pipeline2.stages.each do |stage|
       pipeline1.stages.should include(stage)
     end
+  end
+
+  it "should _merge_ stages from other pipelines" do
+    pipeline1 = Pipeline.new "Pipeline::Stage1::Job1"
+    pipeline2 = Pipeline.new "Pipeline::Stage1::Job2"
+
+    main = Pipeline.new
+    main.add [pipeline1,pipeline2]
+
+    main.stages.size.should == 1
+    main.stages.first.stages.size.should == 1
+    main.stages.first.stages.first.stages.size.should == 2
   end
 end

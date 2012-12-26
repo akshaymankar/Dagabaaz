@@ -15,7 +15,7 @@ describe PipelineHelper do
     XmlSimple.should_receive(:xml_in).with(:url_handle).and_return(xml_to_hash)
 
     project = @dummy.get_pipelines :url
-    names = project.pipelines.collect { |pipeline| pipeline.name }
+    names = project.stages.collect { |pipeline| pipeline.name }
 
     ["Pipeline1","Pipeline2"].each do |pipeline_name|
       names.should include(pipeline_name)
