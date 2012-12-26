@@ -1,0 +1,8 @@
+%html
+  %head
+    %title Dagabaaz!
+  %body
+    - @project.pipelines.each do |pipeline|
+      %strong= pipeline.name
+      - pipeline.stages.each do |stage|
+        %span= stage.name
