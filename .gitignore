@@ -3,3 +3,6 @@
 
 #Idea Files
 .idea/
+
+#Configuration Files
+config.yml

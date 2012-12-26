@@ -1,9 +1,16 @@
 require "sinatra/base"
+require File.dirname(__FILE__)+ "/boot"
 
 class Dagabaaz < Sinatra::Base
 
+  include PipelineHelper
+
   get '/' do
     config=YAML.load_file "config.yml"
-    config["url"]
+    projects  = ""
+    get_pipelines(config["url"]).each do |project|
+      projects += project + "\n"
+    end
+    projects
   end
 end

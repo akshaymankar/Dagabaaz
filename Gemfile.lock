@@ -20,6 +20,7 @@ GEM
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
     tilt (1.3.3)
+    xml-simple (1.1.2)
 
 PLATFORMS
   ruby
@@ -28,3 +29,4 @@ DEPENDENCIES
   rack-test
   rspec
   sinatra
+  xml-simple
