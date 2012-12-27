@@ -1,0 +1,29 @@
+.project li{
+    border: 1px solid black;
+    background: #32cd32;
+    padding: 10px;
+}
+
+.pipeline li{
+    border: 1px solid black;
+    background: #98fb98;
+    padding: 10px;
+}
+
+.stage li{
+    border: 1px solid black;
+    background: #5f9ea0;
+    margin: 10px;
+}
+
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+li{
+    display: inline-block;
+}
