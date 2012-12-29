@@ -1,12 +1,16 @@
 class Pipeline
-  attr_reader :name, :stages
+  attr_reader :name, :stages, :build_status, :build_time, :url
 
-  def initialize(name = "Default")
-    pipeline_names = name.split("::")
+  def initialize(args)
+    pipeline_names = args["name"].split("::")
     @name = pipeline_names.first.strip
     pipeline_names.shift
     stages = pipeline_names.join("::")
-    @stages = stages == "" ? [] : [ Pipeline.new(stages) ]
+    @stages = stages == "" ? [] : [ Pipeline.new("name" => stages) ]
+  end
+
+  def self.default
+    self.new("name" => "default")
   end
 
   def eql?(other)
@@ -22,6 +26,7 @@ class Pipeline
     more_stages.each do |stage|
       if @stages.include?(stage)
         @stages.find{|p| p == stage}.add(stage.stages)
+
       else
         @stages.push stage
       end

@@ -7,10 +7,11 @@ describe Dagabaaz do
     Dagabaaz.new
   end
 
-  it "read and show cctray url from config.yml " do
+  it "should send cctray url to view" do
     YAML.should_receive(:load_file).and_return({"url" => "abcd"})
-    pipelines = ["Pipeline 1", "Pipeline 1::Stage 1", "Pipeline 1::Stage 2", "Pipeline 2","Pipeline 2::Stage 1","Pipeline 2::Stage 1::Job 1" , "Pipeline 3", "Pipeline 3::Stage 1"].collect { |n| Pipeline.new n }
-    project = Pipeline.new
+    pipeline_names = ["Pipeline 1", "Pipeline 1::Stage 1", "Pipeline 1::Stage 2", "Pipeline 2", "Pipeline 2::Stage 1", "Pipeline 2::Stage 1::Job 1", "Pipeline 3", "Pipeline 3::Stage 1"]
+    pipelines = pipeline_names.collect { |n| Pipeline.new "name" => n }
+    project = Pipeline.default
     project.add pipelines
     Dagabaaz.any_instance.stub(:get_pipelines).and_return(project)
 

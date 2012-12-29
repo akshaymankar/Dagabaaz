@@ -1,19 +1,22 @@
-require "rspec"
+require "./spec/spec_helper"
 
 describe Pipeline do
-  it {should respond_to :name}
-  it {should respond_to :stages}
+
+  it "should create default pipeline" do
+    pipeline = Pipeline.default
+    pipeline.should_not be_nil
+  end
 
   it "should be equal to other Pipeline if the names are same" do
-    pipeline1 = Pipeline.new "p1"
-    pipeline2 = Pipeline.new "p1"
+    pipeline1 = Pipeline.new "name" => "p1"
+    pipeline2 = Pipeline.new "name" => "p1"
 
     pipeline1.should eql(pipeline2)
     pipeline1.should == pipeline2
   end
 
   it "should also create and add subpipeline" do
-    pipeline = Pipeline.new "Pipeline::Stage"
+    pipeline = Pipeline.new "name" => "Pipeline::Stage"
 
     pipeline.name.should == "Pipeline"
 
@@ -22,7 +25,7 @@ describe Pipeline do
   end
 
   it "should create subpipelines at all stages" do
-    pipeline = Pipeline.new "Pipeline::Stage::Job"
+    pipeline = Pipeline.new  "name" => "Pipeline::Stage::Job"
 
     pipeline.name.should == "Pipeline"
 
@@ -34,9 +37,9 @@ describe Pipeline do
   end
 
   it "should add stages from other pipeline" do
-    pipeline1 = Pipeline.new "Pipeline:Stage1"
-    pipeline2 = Pipeline.new "Pipeline:Stage2"
-    pipeline2.stages.push(Pipeline.new "Stage3")
+    pipeline1 = Pipeline.new "name" => "Pipeline:Stage1"
+    pipeline2 = Pipeline.new "name" => "Pipeline:Stage2"
+    pipeline2.stages.push(Pipeline.new "name" => "Stage3")
 
     pipeline1.add(pipeline2.stages)
 
@@ -46,10 +49,10 @@ describe Pipeline do
   end
 
   it "should _merge_ stages from other pipelines" do
-    pipeline1 = Pipeline.new "Pipeline::Stage1::Job1"
-    pipeline2 = Pipeline.new "Pipeline::Stage1::Job2"
+    pipeline1 = Pipeline.new "name" => "Pipeline::Stage1::Job1"
+    pipeline2 = Pipeline.new "name"=> "Pipeline::Stage1::Job2"
 
-    main = Pipeline.new
+    main = Pipeline.default
     main.add [pipeline1,pipeline2]
 
     main.stages.size.should == 1
@@ -58,7 +61,7 @@ describe Pipeline do
   end
 
   it "should strip name while saving " do
-    pipeline1 = Pipeline.new " Abcd "
+    pipeline1 = Pipeline.new "name" => " Abcd "
     pipeline1.name.should == "Abcd"
   end
 end
