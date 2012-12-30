@@ -64,4 +64,25 @@ describe Pipeline do
     pipeline1 = Pipeline.new "name" => " Abcd "
     pipeline1.name.should == "Abcd"
   end
+
+  {
+      "activity" => "Sleeping",
+      "lastBuildStatus" => "Success",
+      "lastBuildLabel" => "10",
+      "lastBuildTime" => "2005-09-28T10:30:34.6362160+01:0",
+      "nextBuildTime" => "2005-09-29T10:30:34.6362160+01:0",
+      "webUrl" => "http://test/cctray/url"
+  }.each do |attribute_name, attribute_value|
+    it "should be created with '#{attribute_name}' attribute at leaf" do
+
+      #main_pipeline = @dummy.get_pipelines :url
+
+      pipeline = Pipeline.new "name" => "Pipeline1::Stage1::Job1", attribute_name => attribute_value
+      stage = pipeline.stages.first
+      job = stage.stages.first
+
+      job.send(attribute_name.to_sym).should == attribute_value
+    end
+  end
+
 end

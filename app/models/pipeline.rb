@@ -1,12 +1,20 @@
 class Pipeline
-  attr_reader :name, :stages, :build_status, :build_time, :url
+  attr_reader :name, :stages, :activity, :lastBuildStatus, :lastBuildLabel, :lastBuildTime, :lastBuildLabel, :nextBuildTime, :webUrl
 
   def initialize(args)
     pipeline_names = args["name"].split("::")
     @name = pipeline_names.first.strip
     pipeline_names.shift
-    stages = pipeline_names.join("::")
-    @stages = stages == "" ? [] : [ Pipeline.new("name" => stages) ]
+    stage_name = pipeline_names.join("::")
+    @stages = stage_name == "" ? [] : [ Pipeline.new(args.merge("name" => stage_name)) ]
+    if @stages.empty?
+      @activity = args["activity"]
+      @lastBuildStatus = args["lastBuildStatus"]
+      @lastBuildLabel = args["lastBuildLabel"]
+      @lastBuildTime = args["lastBuildTime"]
+      @nextBuildTime = args["nextBuildTime"]
+      @webUrl = args["webUrl"]
+    end
   end
 
   def self.default
