@@ -1,11 +1,14 @@
-%ul.project
+%ul.project{:class => "clearfix"}
   - @project.stages.each do |pipeline|
     %li
-      %div= pipeline.name
-      %ul.pipeline
-        - pipeline.stages.each do |stage|
-          %li
-            %div= stage.name
-            %ul.stage
-              - stage.stages.each do |job|
-                %li= job.name
+      .pipeline{:class => pipeline.lastBuildStatus}
+        %div= pipeline.name
+        %ul
+          - pipeline.stages.each do |stage|
+            %li
+              .stage{:class => stage.lastBuildStatus}
+                %div= stage.name
+                %ul
+                  - stage.stages.each do |job|
+                    %li.job(class="#{job.lastBuildStatus}" )
+                      = job.name

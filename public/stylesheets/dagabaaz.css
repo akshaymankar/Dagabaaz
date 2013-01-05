@@ -1,29 +1,68 @@
-.project li{
+html{
+    height: 100%;
+}
+.project{
     border: 1px solid black;
-    background: #32cd32;
-    padding: 10px;
+    height: auto;
+    width: 100%;
+    display: block;
 }
 
-.pipeline li{
+.clearfix::after{
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.pipeline{
     border: 1px solid black;
+    padding: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+}
+
+.pipeline.Success {
     background: #98fb98;
+}
+
+.pipeline.Failure {
+    background: #cd5c5c;
+}
+
+.stage{
+    border: 1px solid black;
     padding: 10px;
 }
 
-.stage li{
-    border: 1px solid black;
+.stage.Success {
     background: #5f9ea0;
-    margin: 10px;
 }
 
+.stage.Failure {
+    background: red;
+}
+
+.job{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.job.Success{
+    background: #adff2f;
+}
+
+.job.Failure{
+    background: #ff4500;
+}
 
 ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
-    display: inline-block;
+    display: block;
 }
 
 li{
-    display: inline-block;
+    display: block;
 }
