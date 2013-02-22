@@ -9,3 +9,6 @@ config.yml
 
 #Mac shit
 .DS_Store
+
+#sample cctray xml
+public/sample.xml
