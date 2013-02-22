@@ -25,7 +25,7 @@ describe Pipeline do
   end
 
   it "should create subpipelines at all stages" do
-    pipeline = Pipeline.new  "name" => "Pipeline::Stage::Job"
+    pipeline = Pipeline.new "name" => "Pipeline::Stage::Job"
 
     pipeline.name.should == "Pipeline"
 
@@ -50,10 +50,10 @@ describe Pipeline do
 
   it "should _merge_ stages from other pipelines" do
     pipeline1 = Pipeline.new "name" => "Pipeline::Stage1::Job1"
-    pipeline2 = Pipeline.new "name"=> "Pipeline::Stage1::Job2"
+    pipeline2 = Pipeline.new "name" => "Pipeline::Stage1::Job2"
 
     main = Pipeline.default
-    main.add [pipeline1,pipeline2]
+    main.add [pipeline1, pipeline2]
 
     main.stages.size.should == 1
     main.stages.first.stages.size.should == 1
@@ -84,5 +84,27 @@ describe Pipeline do
       job.send(attribute_name.to_sym).should == attribute_value
     end
   end
+
+  it "should recursively convert to json" do
+    jobs = []
+    jobs << Pipeline.new("name" => "p1::s1::j1")
+    jobs<< Pipeline.new("name" => "p1::s1::j2")
+    jobs << Pipeline.new("name" => "p1::s2::j1")
+
+    project = Pipeline.default
+    project.add jobs
+
+
+    project_hash = project.to_hash
+
+    project_hash[:name].should == "default"
+    project_hash[:stages].first[:name].should == "p1"
+    project_hash[:stages].first[:stages].first[:name].should == "s1"
+    project_hash[:stages].first[:stages].first[:stages].first[:name].should == "j1"
+    project_hash[:stages].first[:stages].first[:stages][1][:name].should == "j2"
+    project_hash[:stages].first[:stages][1][:name].should == "s2"
+    project_hash[:stages].first[:stages][1][:stages].first[:name].should == "j1"
+  end
+
 
 end

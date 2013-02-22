@@ -1,5 +1,5 @@
 class Pipeline
-  attr_reader :name, :stages, :activity, :lastBuildStatus, :lastBuildLabel, :lastBuildTime, :lastBuildLabel, :nextBuildTime, :webUrl
+  attr_reader :name, :stages, :activity, :lastBuildStatus, :lastBuildLabel, :lastBuildTime, :nextBuildTime, :webUrl
 
   def initialize(args)
     pipeline_names = args["name"].split("::")
@@ -39,6 +39,19 @@ class Pipeline
         @stages.push stage
       end
     end
+  end
+
+  def to_hash
+    {
+        :name => name,
+        :stages => stages.collect(&:to_hash),
+        :activity => activity,
+        :lastBuildStatus => lastBuildStatus,
+        :lastBuildLabel => lastBuildLabel,
+        :lastBuildTime => lastBuildTime,
+        :nextBuildTime => nextBuildTime,
+        :webUrl => webUrl
+    }
   end
 
 end

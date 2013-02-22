@@ -5,6 +5,7 @@ ruby "1.9.3"
 gem "sinatra"
 gem "xml-simple", :require => 'xmlsimple'
 gem "haml"
+gem "json"
 
 group :test do
   gem "rspec"
